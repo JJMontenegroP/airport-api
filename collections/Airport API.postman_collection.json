@@ -1,0 +1,1255 @@
+{
+	"info": {
+		"_postman_id": "94128e38-81c4-4776-bb1b-95cd1c949a06",
+		"name": "Airport API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38052366",
+		"_collection_link": "https://unaindes-team.postman.co/workspace/Uniandes-Team-Workspace~e38bd612-d5c7-482c-b578-eede39d81648/collection/38052366-94128e38-81c4-4776-bb1b-95cd1c949a06?action=share&source=collection_link&creator=38052366"
+	},
+	"item": [
+		{
+			"name": "Airports",
+			"item": [
+				{
+					"name": "Create airport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const data = pm.response.json()",
+									"pm.globals.set(\"airport_id\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"El Dorado\",\n    \"code\": \"ED00\",\n    \"country\": \"Colombia\",\n    \"city\": \"Bogotá\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create invalid airport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"airport_id\", data.id);",
+									"",
+									"pm.test(\"Status code is 400\", function () {",
+									"   pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"El Dorado\",\n    \"country\": \"Colombia\",\n    \"city\": \"Bogotá\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get airports",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const data = pm.response.json()",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test('Number of airports > ' + 0, function () {",
+									"   pm.expect(data.length).to.greaterThan(0)",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get airport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airports/{{airport_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airports",
+								"{{airport_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get airport that does not exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   const data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"Airport not found\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airports/f81d8f57-dce9-47e9-9256-534e78ac72ab",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airports",
+								"f81d8f57-dce9-47e9-9256-534e78ac72ab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update airport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"El Dorado actualizado\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airports/{{airport_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airports",
+								"{{airport_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update airport that does not exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   const data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"Airport not found\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"El Dorado actualizado\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airports/f81d8f57-dce9-47e9-9256-534e78ac72ab",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airports",
+								"f81d8f57-dce9-47e9-9256-534e78ac72ab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete airport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airports/{{airport_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airports",
+								"{{airport_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete airport that does not exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"Airport not found\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airports/f81d8f57-dce9-47e9-9256-534e78ac72ab",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airports",
+								"f81d8f57-dce9-47e9-9256-534e78ac72ab"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Airlines",
+			"item": [
+				{
+					"name": "Create airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const data = pm.response.json()",
+									"pm.globals.set(\"airline_id\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Avianca\",\n    \"website\": \"avianca.com\",\n    \"foundationDate\": \"2024-09-15\",\n    \"description\": \"Avianca is an airline\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create invalid airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const data = pm.response.json()",
+									"pm.globals.set(\"airline_id\", data.id);",
+									"",
+									"pm.test(\"Status code is 400\", function () {",
+									"   pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"website\": \"avianca.com\",\n    \"foundationDate\": \"2024-09-15\",\n    \"description\": \"Avianca is an airline\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get airlines",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const data = pm.response.json()",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test('Number of airlines > ' + 0, function () {",
+									"   pm.expect(data.length).to.greaterThan(0)",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/{{airline_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"{{airline_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get airline that does not exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   const data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"Airline not found\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/522d877b-8bf3-4460-9401-92c7764e6122",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"522d877b-8bf3-4460-9401-92c7764e6122"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"El Dorado\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/{{airline_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"{{airline_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update airline that does not exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   const data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"Airline not found\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"El Dorado\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/522d877b-8bf3-4460-9401-92c7764e6122",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"522d877b-8bf3-4460-9401-92c7764e6122"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/{{airline_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"{{airline_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete airline that does not exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"Airline not found\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/a311b937-70ae-4c6b-9ba6-2ae6fbc25f19",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"a311b937-70ae-4c6b-9ba6-2ae6fbc25f19"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AirportAirlines",
+			"item": [
+				{
+					"name": "Add airport to airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"El Dorado\",\n    \"code\": \"ED00\",\n    \"country\": \"Colombia\",\n    \"city\": \"Bogotá\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/{{airline_id}}/airports/{{airport_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"{{airline_id}}",
+								"airports",
+								"{{airport_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add airport that does not exist to an airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   const data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"Airport not found\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"El Dorado\",\n    \"code\": \"ED00\",\n    \"country\": \"Colombia\",\n    \"city\": \"Bogotá\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/{{airline_id}}/airports/1e7dc64d-92ef-4db4-9590-77260235219d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"{{airline_id}}",
+								"airports",
+								"1e7dc64d-92ef-4db4-9590-77260235219d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get airports from airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/{{airline_id}}/airports/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"{{airline_id}}",
+								"airports",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get airport from airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/{{airline_id}}/airports/{{airport_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"{{airline_id}}",
+								"airports",
+								"{{airport_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get airport that does not exist in airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"Airport not found\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/{{airline_id}}/airports/1e7dc64d-92ef-4db4-9590-77260235219d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"{{airline_id}}",
+								"airports",
+								"1e7dc64d-92ef-4db4-9590-77260235219d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update airports from airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"id\": \"{{airport_id}}\",\n        \"name\": \"El Dorado\",\n        \"code\": \"ED007\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/{{airline_id}}/airports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"{{airline_id}}",
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update airports that does not exist in airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 412\", function () {",
+									"   pm.response.to.have.status(412);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"airport does not exist in the airline or id is not specified\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"id\": \"f81d8f57-dce9-47e9-9256-534e78ac70ab\",\n        \"name\": \"El Dorado\",\n        \"code\": \"ED007\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/{{airline_id}}/airports",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"{{airline_id}}",
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete airport from airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/{{airline_id}}/airports/{{airport_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"{{airline_id}}",
+								"airports",
+								"{{airport_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete airport that does not exist in airline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   const data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"Airport not found\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/airlines/{{airline_id}}/airports/1e7dc64d-92ef-4db4-9590-77260235219d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"{{airline_id}}",
+								"airports",
+								"1e7dc64d-92ef-4db4-9590-77260235219d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
