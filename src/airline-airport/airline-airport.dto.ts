@@ -5,7 +5,7 @@ import {
   IsString,
 } from "class-validator";
 
-export class UpdateAirportFromAirline {
+export class UpdateAirportFromAirlineDto {
   @IsString()
   @IsNotEmpty()
   id: string;

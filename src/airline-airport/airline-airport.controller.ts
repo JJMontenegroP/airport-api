@@ -15,7 +15,7 @@ import {
   ExceptionsInterceptor,
   UUIDValidationInterceptor,
 } from "@/shared/interceptors";
-import { UpdateAirportFromAirline } from "./airline-airport.dto";
+import { UpdateAirportFromAirlineDto } from "./airline-airport.dto";
 import { AirlineAirportService } from "./airline-airport.service";
 
 @Controller("airlines")
@@ -53,7 +53,7 @@ export class AirlineAirportController {
   @Patch(":airlineId/airports")
   async updateAirportsFromAirline(
     @Param("airlineId") airlineId: string,
-    @Body() airports: UpdateAirportFromAirline[],
+    @Body() airports: UpdateAirportFromAirlineDto[],
   ) {
     return this.airlineAirportService.updateAirportsFromAirline(
       airlineId,

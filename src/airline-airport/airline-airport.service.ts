@@ -6,7 +6,7 @@ import { Repository } from "typeorm";
 import { Airline } from "@/airline/airline.entity";
 import { Airport } from "@/airport/airport.entity";
 import { BusinessError, BusinessLogicException } from "@/shared/exceptions";
-import { UpdateAirportFromAirline } from "./airline-airport.dto";
+import { UpdateAirportFromAirlineDto } from "./airline-airport.dto";
 
 @Injectable()
 export class AirlineAirportService {
@@ -158,7 +158,7 @@ export class AirlineAirportService {
 
   async updateAirportsFromAirline(
     airlineId: string,
-    airports: UpdateAirportFromAirline[],
+    airports: UpdateAirportFromAirlineDto[],
   ) {
     const airline = await this.airlineRepository.findOne({
       where: { id: airlineId },
