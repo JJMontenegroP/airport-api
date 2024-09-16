@@ -1,9 +1,4 @@
-import {
-  IsDateString,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from "class-validator";
+import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class UpdateAirportFromAirlineDto {
   @IsString()
@@ -12,18 +7,17 @@ export class UpdateAirportFromAirlineDto {
 
   @IsString()
   @IsOptional()
+  code?: string;
+
+  @IsString()
+  @IsOptional()
   name?: string;
 
   @IsString()
   @IsOptional()
-  description?: string;
-
-  @IsString()
-  @IsDateString()
-  @IsOptional()
-  foundationDate?: string;
+  country?: string;
 
   @IsString()
   @IsOptional()
-  website?: string;
+  city?: string;
 }
