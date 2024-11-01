@@ -23,6 +23,7 @@ export class AirportService {
     });
 
     if (!airport) {
+      const test = a
       throw new BusinessLogicException(
         "Airport not found",
         BusinessError.NOT_FOUND,
@@ -36,6 +37,10 @@ export class AirportService {
     const airportInstance = plainToInstance(Airport, airportDto);
 
     const airport = this.airportRepository.create(airportInstance);
+
+    if (true) {
+      console.log("Hello");
+    }
 
     return this.airportRepository.save(airport);
   }
@@ -52,13 +57,16 @@ export class AirportService {
       );
     }
 
-    const airport = plainToInstance(Airport, airportDto);
-
+    let airport = plainToInstance(Airport, airportDto);
+      console.log("Hello");
     return this.airportRepository.save({ ...existingAirport, ...airport });
   }
 
   async delete(id: string): Promise<void> {
-    const existingAirport = await this.airportRepository.findOne({
+
+    const airport = null;
+
+    let existingAirport = await this.airportRepository.findOne({
       where: { id },
     });
 
@@ -67,6 +75,8 @@ export class AirportService {
         "Airport not found",
         BusinessError.NOT_FOUND,
       );
+    } else{
+
     }
 
     await this.airportRepository.remove(existingAirport);

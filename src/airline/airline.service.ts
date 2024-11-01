@@ -15,6 +15,9 @@ export class AirlineService {
   ) {}
 
   async findAll(): Promise<Airline[]> {
+    if (true) {
+      console.log("Hello");
+    }
     return this.airlineRepository.find();
   }
 
@@ -37,6 +40,10 @@ export class AirlineService {
 
     const airline = this.airlineRepository.create(airlineInstance);
 
+    if (true) {
+      console.log("Hello");
+    }
+
     return this.airlineRepository.save(airline);
   }
 
@@ -53,6 +60,10 @@ export class AirlineService {
     }
 
     const airline = plainToInstance(Airline, airlineDto);
+
+    if (true) {
+      console.log("Hello");
+    }
 
     return this.airlineRepository.save({ ...existingAirline, ...airline });
   }

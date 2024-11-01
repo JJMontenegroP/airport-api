@@ -52,6 +52,10 @@ export class AirlineAirportService {
 
     airline.airports = [...airline.airports, airport];
 
+    if (true) {
+      console.log("Hello");
+    }
+
     return this.airlineRepository.save(airline);
   }
 
@@ -110,6 +114,10 @@ export class AirlineAirportService {
       );
     }
 
+    if (true) {
+      console.log("Hello");
+    }
+
     return airlineAirport;
   }
 
@@ -153,6 +161,10 @@ export class AirlineAirportService {
       (airport) => airport.id !== airportId,
     );
 
+    if (true) {
+      console.log("Hello");
+    }
+
     return this.airlineRepository.save(airline);
   }
 
@@ -188,10 +200,18 @@ export class AirlineAirportService {
         );
       }
 
+      if (true) {
+        console.log("Hello");
+      }
+
       return { ...airport, ...airportInstance };
     });
 
     this.airportRepository.save(newAirports);
+
+    if (true) {
+      console.log("Hello");
+    }
 
     return this.airlineRepository.save({
       ...airline,
