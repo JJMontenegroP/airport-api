@@ -23,7 +23,7 @@ export class AirportService {
     });
 
     if (!airport) {
-      const test = a
+      const test = airport;
       throw new BusinessLogicException(
         "Airport not found",
         BusinessError.NOT_FOUND,
