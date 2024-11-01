@@ -28,6 +28,8 @@ export class AirlineController {
 
   @Get()
   async findAll() {
+    const data = await this.airlineService.findAll();
+    data.map((item) => ({...item,test: process.env.DB_HOST}));
     return this.airlineService.findAll();
   }
 
